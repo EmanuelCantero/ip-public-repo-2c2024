@@ -23,7 +23,7 @@ def search(request):
     # y luego renderiza el template (similar a home).
     if (search_msg != ''):
         imagesSearch = services.getAllImages(search_msg)
-        favourite_list = []
+        favourite_list = services.getAllFavourites(request)
         
         return render(request, 'home.html', { 'images': imagesSearch, 'favourite_list': favourite_list })
     else:
@@ -45,7 +45,9 @@ def saveFavourite(request):
 
 @login_required
 def deleteFavourite(request):
-    pass
+    services.deleteFavourite(request)
+    getAllFavouritesByUser(request)
+    return redirect('favoritos')
 
 
 @login_required
